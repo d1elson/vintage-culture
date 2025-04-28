@@ -36,10 +36,10 @@ def go():
 def add_csp(response: Response):
     response.headers['Content-Security-Policy'] = (
         "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline' https://www.youtube.com; "
-        "style-src 'self' 'unsafe-inline'; "
+        "frame-src https://www.youtube.com https://www.youtube-nocookie.com; "
         "img-src 'self' data:; "
-        "frame-src https://www.youtube.com https://www.youtube-nocookie.com;"
+        "style-src 'self' 'unsafe-inline'; "
+        "script-src 'self' 'unsafe-inline';"
     )
     return response
 
