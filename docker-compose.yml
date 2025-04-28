@@ -1,7 +1,7 @@
 services:
-  flask_app:
-    build: .
-    container_name: flask_app
+  vintage-culture:
+    container_name: vintage-culture
+    image: vintage-culture:latest
     command: python app.py
     ports:
       - "5000:5000"
