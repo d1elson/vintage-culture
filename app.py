@@ -31,12 +31,6 @@ def go():
     )
 
 
-@app.after_request
-def add_security_headers(response: Response):
-    response.headers['Content-Security-Policy'] = "default-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com;"
-    return response
-
-
 # Endpoint para criar a playlist
 @app.route('/create_random_playlist')
 def create_random_playlist():
