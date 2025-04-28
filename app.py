@@ -1,4 +1,5 @@
 from flask import Flask, Response, render_template, redirect, request, jsonify, session
+from flask_cors import CORS
 import requests
 import random
 import os
@@ -29,6 +30,18 @@ def go():
     return redirect(
         "https://open.spotify.com/intl-pt/album/0uj28c7dMMgO59Jzx84bSE?si=mdhMx9yVTrGLJfvNpC1EdQ"
     )
+
+
+@app.after_request
+def add_csp(response: Response):
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://www.youtube.com; "
+        "style-src 'self' 'unsafe-inline'; "
+        "img-src 'self' data:; "
+        "frame-src https://www.youtube.com https://www.youtube-nocookie.com;"
+    )
+    return response
 
 
 # Endpoint para criar a playlist
