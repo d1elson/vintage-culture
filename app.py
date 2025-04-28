@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, jsonify, session
+from flask import Flask, Response, render_template, redirect, request, jsonify, session
 import requests
 import random
 import os
@@ -29,6 +29,12 @@ def go():
     return redirect(
         "https://open.spotify.com/intl-pt/album/0uj28c7dMMgO59Jzx84bSE?si=mdhMx9yVTrGLJfvNpC1EdQ"
     )
+
+
+@app.after_request
+def add_security_headers(response: Response):
+    response.headers['Content-Security-Policy'] = "default-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com;"
+    return response
 
 
 # Endpoint para criar a playlist
