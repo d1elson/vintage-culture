@@ -17,6 +17,5 @@ def go():
         "https://open.spotify.com/intl-pt/album/0uj28c7dMMgO59Jzx84bSE?si=mdhMx9yVTrGLJfvNpC1EdQ"
     )
 
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

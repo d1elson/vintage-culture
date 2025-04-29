@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  vintage-culture:
+    image: vintage-culture:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    command: python app.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
