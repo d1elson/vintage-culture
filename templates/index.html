@@ -61,26 +61,57 @@
 
     <main>
         <!-- Player do YouTube -->
-        <iframe id="youtubePlayer"
-            src="https://www.youtube.com/embed/6Uv61BQBOf0?playlist=QHjxoP8oSNw,TN8g6F6lANg,6Uv61BQBOf0&autoplay=1&mute=1&rel=0&loop=1"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-        </iframe>
+        <div id="player"></div> <!-- Div para carregar o player do YouTube via API -->
 
         <a href="/go" target="_blank">
             <button type="button">
                 <img src="{{ url_for('static', filename='assets/images/spotify-logo.png') }}" alt="Spotify" class="logo">
             </button>
-            <!-- <button id="createPlaylistButton" type="button">
-                Criar Playlist Aleatória 🎶
-            </button> -->
         </a>
     </main>
 
     <script>
-        document.getElementById('createPlaylistButton').addEventListener('click', () => {
-            window.location.href = '/create_random_playlist';
-        });
+        // Carregar a API do YouTube de forma assíncrona
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Variável global para o player
+        var player;
+
+        // Função que será chamada assim que a API do YouTube for carregada
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: '6Uv61BQBOf0', // ID do vídeo do YouTube
+                playerVars: {
+                    autoplay: 1,
+                    mute: 1,
+                    rel: 0,
+                    loop: 1,
+                    // playlist: 'QHjxoP8oSNw,TN8g6F6lANg,6Uv61BQBOf0' // Lista de vídeos a serem reproduzidos
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Função chamada quando o player está pronto
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // Função chamada quando o estado do player muda
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.ENDED) {
+                // Se o vídeo terminar, reinicia o vídeo
+                player.playVideo();
+            }
+        }
     </script>
 
 </body>
